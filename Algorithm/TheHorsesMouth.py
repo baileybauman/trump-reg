@@ -15,7 +15,7 @@ class Arm(object):
         return("Tweet:\n"
                "  id = {0}\n"
                "  created_at = {1}\n"
-               "  test = {2}\n"
+               "  text = {2}\n"
                .format(self.id, self.created_at, self.text))
 
 def getTweets(filename):
@@ -46,20 +46,48 @@ def getSentenceTags(items):
 	partsOfSpeech = {}
 	for item in items:
 		temp = item.text.decode('ascii', errors="ignore")
-		temp = re.sub(r'\W+', ' ', temp)
-		blob = TextBlob(temp)
+		#temp = re.sub(r'\W+', ' ', temp)
+		temp2 = ""
 		sentenceStructure = []
-		for word, pos in blob.tags:
-	        #print word, pos
-			sentenceStructure.append(str(pos))
-	        if str(pos) in partsOfSpeech:
-	        	partsOfSpeech[str(pos)].append(word)
-	        else:
-	        	partsOfSpeech[str(pos)] = []
-	        	partsOfSpeech[str(pos)].append(word)
+		for word in temp.split():
+			if "http" not in word:
+				word = re.sub(r'[^a-zA-Z0-9 - @ #]', '', word)
+				word = re.sub(r'\s[0-9]+', '', word)
+			else:
+			    word = re.sub(r'"', '', word)
+
+			if "http" in word:
+				sentenceStructure.append("url")
+				if "url" in partsOfSpeech:
+					partsOfSpeech["url"].append(word)
+				else:
+					partsOfSpeech["url"] = []
+					partsOfSpeech["url"].append(word)
+			elif "@" in word:
+				sentenceStructure.append("ref")
+				if "ref" in partsOfSpeech:
+					partsOfSpeech["ref"].append(word)
+				else:
+					partsOfSpeech["ref"] = []
+					partsOfSpeech["ref"].append(word)
+			elif "#" in word:
+				sentenceStructure.append("hashtag")
+				if "hashtag" in partsOfSpeech:
+					partsOfSpeech["hashtag"].append(word)
+				else:
+					partsOfSpeech["hashtag"] = []
+					partsOfSpeech["hashtag"].append(word)
+			else:
+				blob = TextBlob(word)
+				for word2, pos in blob.tags:
+					sentenceStructure.append(str(pos))
+			        if str(pos) in partsOfSpeech:
+			        	partsOfSpeech[str(pos)].append(word2)
+			        else:
+			        	partsOfSpeech[str(pos)] = []
+			        	partsOfSpeech[str(pos)].append(word2)
 		Sentences.append(sentenceStructure)
 	return Sentences, partsOfSpeech
-
 
 test = getTweets('realDonaldTrump_tweets.xls')
 derp = getSentenceTags(test)
