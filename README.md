@@ -20,10 +20,12 @@ To run the code simply type `python TheHorsesMouth.py`
 
 ## Description of Algorithm
 
-Right now our algorithm takes in Trump's tweets and calls an external library that labels each word with a part of speech and puts each word in a specific part of speech dictionary. We also keep track of the sentence structure of each tweet. Each time the program is run a sentence structure is chosen at random and each part of speech in the structure is filled in with a word that Trump has said that is that part of speech. We are currently taking the top 1/5 of words and choosing one at random to insert. We then output our predicted Trump tweet.
+Right now our algorithm takes in Trump's tweets and calls an external library that labels each word with a part of speech and puts each word in a specific part of speech dictionary. We also keep track of the sentence structure of each tweet. Each time the program is run a sentence structure is chosen at random and each part of speech in the structure is filled in with a word that Trump has said that is that part of speech. We are currently taking the top 1/5 of words and choosing one at random to insert. We then output our predicted Trump tweet. We still need to implement the probabilities of words getting chosen in a better way.
 
 ## Sample output 
 
 > my favorite has to be in MakeAmericaGreatAgain no realDonaldTrump lies fired AGAIN
 
 > He ever be his @ noon TRUMP would interpret fired at You Against Can at my dirty mom promos you is this poll
+
+> have poll to a foxandfriends that the Phil @ MAKE Republican that We need to sell but let considered doing to D.C. realDonaldTrump this two over you
