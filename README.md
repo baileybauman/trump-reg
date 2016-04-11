@@ -2,7 +2,7 @@
 
 ## Installation
 
-Simply download the master zip file of our code. Navigate to the root folder and open the 'Algorithm' folder. 
+Simply download the master zip file of our code. Navigate to the root folder and open the `Algorithm` folder. 
 
 ## Dependencies
 
