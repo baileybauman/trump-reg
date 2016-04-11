@@ -1,6 +1,9 @@
 # trump-reg
 
-## Installation and Dependencies
+## Installation
+
+Simply download the zip file
+## Dependencies
 
 If you do not have the dependencies listed below already installed, you will need to do so before our code will be able to run on your computer.
 
@@ -9,3 +12,8 @@ If you do not have the dependencies listed below already installed, you will nee
 > pip install xlrd
 
 > python -m textblob.download_corpora
+
+
+## Description of Algorithm
+
+Right now our algorithm
