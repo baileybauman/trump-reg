@@ -24,8 +24,19 @@ Right now our algorithm takes in Trump's tweets and calls an external library th
 
 ## Sample output 
 
-> my favorite has to be in MakeAmericaGreatAgain no realDonaldTrump lies fired AGAIN
+>  @seanhannity @megynkelly @seanhannity poll believes all up Rubio with Trump up lost done of #VoteTrump
 
-> He ever be his @ noon TRUMP would interpret fired at You Against Can at my dirty mom promos you is this poll
+>  @CNN @seanhannity @oreillyfactor @JebBush much tonight #TrumpTrain believes being HOW would it make Cruz https://t.co/r8ijPnCsmO
 
-> have poll to a foxandfriends that the Phil @ MAKE Republican that We need to sell but let considered doing to D.C. realDonaldTrump this two over you
+>  @JebBush WILL @oreillyfactor see GREAT that We were from @realDonaldTrump the Thank me must Great To get Great much
+
+> @seanhannity @megynkelly @JebBush poll Thank of @ABC very numbers
+
+> could @JebBush at his Thank Trump debate amp We saying He to be na her Cruz of a Thank
+
+>  #TrumpTrain Trump to go South Just made Thank has Rubio last Great Donald #IACaucus https://t.co/nU39QHzxxX
+
+## Things to implement still
+
+> add in punctuation if a tweet structure is more than one sentence
+
