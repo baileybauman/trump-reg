@@ -34,6 +34,8 @@ Right now our algorithm takes in Trump's tweets and calls an external library th
 
 > could @JebBush at his Thank Trump debate amp We saying He to be na her Cruz of a Thank
 
+>  #TrumpTrain Trump to go South Just made Thank has Rubio last Great Donald #IACaucus https://t.co/nU39QHzxxX
+
 ## Things to implement still
 
 > add in punctuation if a tweet structure is more than one sentence
