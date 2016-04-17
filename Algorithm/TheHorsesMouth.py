@@ -99,7 +99,7 @@ wordCounter = Counter(str(e) for e in derp[1]['NNS'])
 #print counter.most_common(5)
 #print wordCounter
 tweetDict = {}
-for i in range(0,100):
+for i in range(0,200):
 	testTweet = random.choice(derp[0])
 	tweet = ""
 	for part in testTweet:
