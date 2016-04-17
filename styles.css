@@ -6,5 +6,23 @@ body{
     background-position: top center !important;
     background-repeat: no-repeat !important;
     background-attachment: fixed;
-     
+
+}
+#text_box{
+    height:17%;
+    width:40%;
+    background: #F00; /* Just so we can see it */
+    position: relative;
+    top: 13%;
+    margin-left:58%; /* Move it 148px to the right of the horizontal center, placing it over the lightswitch */
+}
+#generate_button{
+    height:10%;
+    width:50%;
+    background: #F00; /* Just so we can see it */
+    position: absolute;
+    top: 80%;
+    margin-left:25%; /* Move it 148px to the right of the horizontal center, placing it over the lightswitch */
+    font-size: 24px;
+    text-align: center;
 }
