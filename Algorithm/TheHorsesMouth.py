@@ -4,6 +4,8 @@ from collections import Counter
 import random
 from random import randrange
 import re
+import json
+from nltk.corpus import treebank
 
 class Arm(object):
     def __init__(self, id, created_at, text):
@@ -96,13 +98,18 @@ sentenceCounter = Counter(str(e) for e in derp[0])
 wordCounter = Counter(str(e) for e in derp[1]['NNS'])
 #print counter.most_common(5)
 #print wordCounter
-testTweet = random.choice(derp[0])
-tweet = ""
-for part in testTweet:
-	wordCounter = Counter(str(e) for e in derp[1][part])
-	#print wordCounter
-	wordCounter = wordCounter.most_common(10)
-	test = random.choice(wordCounter)
-	tweet = tweet + " " + test[0]
+tweetDict = {}
+for i in range(0,100):
+	testTweet = random.choice(derp[0])
+	tweet = ""
+	for part in testTweet:
+		wordCounter = Counter(str(e) for e in derp[1][part])
+		#print wordCounter
+		wordCounter = wordCounter.most_common(10)
+		test = random.choice(wordCounter)
+		tweet = tweet + " " + test[0]
+		tweetDict[i] = tweet
+	tweetDict[i] = tweet
 
-print tweet
+with open('data.txt', 'w') as outfile:
+    json.dump(tweetDict, outfile)
