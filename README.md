@@ -40,3 +40,8 @@ Right now our algorithm takes in Trump's tweets and calls an external library th
 
 > add in punctuation if a tweet structure is more than one sentence
 
+## UI Implementation
+
+Our UI can be seen by going to matpd.tech/TrumpReg 
+
+
