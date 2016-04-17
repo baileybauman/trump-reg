@@ -1,5 +1,5 @@
 body{
-    background-image: url('Background.png');
+    background-image: url('BackgroundV2.png');
     -moz-background-size: cover;
     -webkit-background-size: cover;
     background-size: cover;
@@ -8,21 +8,34 @@ body{
     background-attachment: fixed;
 
 }
-#text_box{
-    height:17%;
+#text_background{
+
+    height:20%;
     width:40%;
-    background: #F00; /* Just so we can see it */
     position: relative;
     top: 13%;
     margin-left:58%; /* Move it 148px to the right of the horizontal center, placing it over the lightswitch */
+    background-image: url('bubble.png');
+    background-size: 100% 100%;
+    background-repeat: no-repeat !important;
+}
+#text_box{
+
+    position: relative;
+    top: 13%;
+    margin-left:5%; /* Move it 148px to the right of the horizontal center, placing it over the lightswitch */
+    
+
 }
 #generate_button{
     height:10%;
     width:50%;
-    background: #F00; /* Just so we can see it */
+    background: rgb(216, 143, 145); /* Just so we can see it */
     position: absolute;
-    top: 80%;
-    margin-left:25%; /* Move it 148px to the right of the horizontal center, placing it over the lightswitch */
+    top: 90%;
+    margin-left:24%; /* Move it 148px to the right of the horizontal center, placing it over the lightswitch */
     font-size: 24px;
     text-align: center;
+    border-radius: 20px;
+    border-color: black;
 }
