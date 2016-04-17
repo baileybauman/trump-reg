@@ -23,8 +23,8 @@ body{
 
     position: relative;
     top: 13%;
-    margin-left:5%; /* Move it 148px to the right of the horizontal center, placing it over the lightswitch */
-    
+    margin-left:5%; 
+    margin-right: 5%;
 
 }
 #generate_button{
