@@ -16,8 +16,8 @@
 </html>
 <script>
 $("#generate_button").click(function() {
-  $.getJSON('test.txt', function(read_data) {
-      $('#text_box').html(read_data.result[0].option + read_data[0].percent);  });
+  $.getJSON('data.txt', function(read_data) {
+      $('#text_box').html(read_data[100]);  });
 });
 
 </script>
