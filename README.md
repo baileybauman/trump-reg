@@ -52,3 +52,5 @@ Our UI can be seen by going to matpd.tech/TrumpReg
 speeches:
 
 > http://time.com/4267058/donald-trump-aipac-speech-transcript/
+
+> http://www.p2016.org/photos15/summit/trump012415spt.html
