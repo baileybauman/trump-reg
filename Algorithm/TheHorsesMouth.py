@@ -116,6 +116,43 @@ def getSentenceTags(items):
 					partsOfSpeech["punctuation"] = []
 					partsOfSpeech["punctuation"].append(punctuation)
 		Sentences.append(sentenceStructure)
+	
+	speeches = ["speech.txt","speech2.txt"]
+	for file in speeches:
+		speech = open(file, "r")
+		for line in speech:
+			line = line.lower()
+			# new word
+			line = re.sub(r'[^a-zA-Z0-9 - @ # . !]', '', line)
+			punctuation = ""
+			temp = line
+			if "." in line:
+				punctuation = "."
+				temp = line[:len(line)-1]
+			elif "!" in line:
+				punctuation = "!"
+				temp = line[:len(line)-1]
+			line = temp
+
+
+			blob = TextBlob(line.decode('ascii', errors="ignore"))
+			for word2, pos in blob.tags:
+				sentenceStructure.append(str(pos))
+				if str(pos) in partsOfSpeech:
+					partsOfSpeech[str(pos)].append(word2)
+				else:
+					partsOfSpeech[str(pos)] = []
+					partsOfSpeech[str(pos)].append(word2)
+
+			sentenceStructure.append("punctuation")
+			if "punctuation" in partsOfSpeech:
+				partsOfSpeech["punctuation"].append(punctuation)
+			else:
+				partsOfSpeech["punctuation"] = []
+				partsOfSpeech["punctuation"].append(punctuation)
+			Sentences.append(sentenceStructure)
+			sentenceStructure = []
+			
 	return Sentences, partsOfSpeech
 
 test = getTweets('realDonaldTrump_tweets.xls')
@@ -138,5 +175,5 @@ for i in range(0,200):
 		tweetDict[i] = tweet
 	tweetDict[i] = tweet
 
-with open('data.txt', 'w') as outfile:
+with open('test_data.txt', 'w') as outfile:
     json.dump(tweetDict, outfile)
