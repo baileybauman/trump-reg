@@ -115,6 +115,9 @@ def getSentenceTags(items):
 				else:
 					partsOfSpeech["punctuation"] = []
 					partsOfSpeech["punctuation"].append(punctuation)
+				Sentences.append(sentenceStructure)
+				sentenceStructure = []
+
 		Sentences.append(sentenceStructure)
 	return Sentences, partsOfSpeech
 
