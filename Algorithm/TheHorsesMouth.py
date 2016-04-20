@@ -53,11 +53,12 @@ def getSentenceTags(items):
 		sentenceStructure = []
 		for word in temp.split():
 			if "http" not in word:
-				word = re.sub(r'[^a-zA-Z0-9 - @ #]', '', word)
+				word = re.sub(r'[^a-zA-Z0-9 - @ # . !]', '', word)
 				word = re.sub(r'\s[0-9]+', '', word)
+				word = word.lower()
 			else:
 			    word = re.sub(r'"', '', word)
-
+			punctuation = ""
 			if "http" in word:
 				sentenceStructure.append("url")
 				if "url" in partsOfSpeech:
@@ -65,29 +66,55 @@ def getSentenceTags(items):
 				else:
 					partsOfSpeech["url"] = []
 					partsOfSpeech["url"].append(word)
-			elif "@" in word:
-				sentenceStructure.append("ref")
-				if "ref" in partsOfSpeech:
-					partsOfSpeech["ref"].append(word)
-				else:
-					partsOfSpeech["ref"] = []
-					partsOfSpeech["ref"].append(word)
-			elif "#" in word:
-				sentenceStructure.append("hashtag")
-				if "hashtag" in partsOfSpeech:
-					partsOfSpeech["hashtag"].append(word)
-				else:
-					partsOfSpeech["hashtag"] = []
-					partsOfSpeech["hashtag"].append(word)
+			
 			else:
-				blob = TextBlob(word)
-				for word2, pos in blob.tags:
-					sentenceStructure.append(str(pos))
-			        if str(pos) in partsOfSpeech:
-			        	partsOfSpeech[str(pos)].append(word2)
-			        else:
-			        	partsOfSpeech[str(pos)] = []
-			        	partsOfSpeech[str(pos)].append(word2)
+				temp = word
+				if "." in word:
+					punctuation = "."
+					temp = word[:len(word)-1]
+				elif "!" in word:
+					punctuation = "!"
+					temp = word[:len(word)-1]
+
+				word = temp
+				if "@" in word:
+					sentenceStructure.append("ref")
+					if "ref" in partsOfSpeech:
+						partsOfSpeech["ref"].append(word)
+					else:
+						partsOfSpeech["ref"] = []
+						partsOfSpeech["ref"].append(word)
+				elif "#" in word:
+					sentenceStructure.append("hashtag")
+					if "hashtag" in partsOfSpeech:
+						partsOfSpeech["hashtag"].append(word)
+					else:
+						partsOfSpeech["hashtag"] = []
+						partsOfSpeech["hashtag"].append(word)
+				elif "amp" == word:
+					word = "&"
+					sentenceStructure.append("amp")
+					if "amp" in partsOfSpeech:
+						partsOfSpeech["amp"].append(word)
+					else:
+						partsOfSpeech["amp"] = []
+						partsOfSpeech["amp"].append(word)
+				else:
+					blob = TextBlob(word)
+					for word2, pos in blob.tags:
+						sentenceStructure.append(str(pos))
+				        if str(pos) in partsOfSpeech:
+				        	partsOfSpeech[str(pos)].append(word2)
+				        else:
+				        	partsOfSpeech[str(pos)] = []
+				        	partsOfSpeech[str(pos)].append(word2)
+			if punctuation != "":
+				sentenceStructure.append("punctuation")
+				if "punctuation" in partsOfSpeech:
+					partsOfSpeech["punctuation"].append(punctuation)
+				else:
+					partsOfSpeech["punctuation"] = []
+					partsOfSpeech["punctuation"].append(punctuation)
 		Sentences.append(sentenceStructure)
 	return Sentences, partsOfSpeech
 
