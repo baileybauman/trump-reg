@@ -119,6 +119,13 @@ def getSentenceTags(items):
 	return Sentences, partsOfSpeech
 
 test = getTweets('realDonaldTrump_tweets.xls')
+actualTweets = {}
+k = 0
+for item in test:
+	temp = item.text
+	actualTweets[k] = temp
+	k = k+1
+
 derp = getSentenceTags(test)
 
 sentenceCounter = Counter(str(e) for e in derp[0])
@@ -126,7 +133,7 @@ wordCounter = Counter(str(e) for e in derp[1]['NNS'])
 #print counter.most_common(5)
 #print wordCounter
 tweetDict = {}
-for i in range(0,200):
+for i in range(0,3000):
 	testTweet = random.choice(derp[0])
 	tweet = ""
 	for part in testTweet:
@@ -140,3 +147,6 @@ for i in range(0,200):
 
 with open('data.txt', 'w') as outfile:
     json.dump(tweetDict, outfile)
+
+with open('actualTweets.txt', 'w') as outfile:
+    json.dump(actualTweets, outfile)
