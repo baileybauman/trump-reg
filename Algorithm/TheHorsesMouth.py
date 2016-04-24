@@ -46,11 +46,16 @@ def getTweets(filename):
 def getSentenceTags(items):
 	Sentences = []
 	partsOfSpeech = {}
+	pairs = {} #NN NN
+	pairs2 = {} #NN NNs
+	pairs3 = {} #IN NN
 	for item in items:
 		temp = item.text.decode('ascii', errors="ignore")
 		#temp = re.sub(r'\W+', ' ', temp)
 		temp2 = ""
 		sentenceStructure = []
+		previous = ""
+		previousPOS = ""
 		for word in temp.split():
 			if "http" not in word:
 				word = re.sub(r'[^a-zA-Z0-9 - @ # . !]', '', word)
@@ -66,7 +71,8 @@ def getSentenceTags(items):
 				else:
 					partsOfSpeech["url"] = []
 					partsOfSpeech["url"].append(word)
-			
+				previous = word
+				previousPOS = "url"
 			else:
 				temp = word
 				if "." in word:
@@ -84,6 +90,8 @@ def getSentenceTags(items):
 					else:
 						partsOfSpeech["ref"] = []
 						partsOfSpeech["ref"].append(word)
+					previous = word
+					previousPOS = "ref"
 				elif "#" in word:
 					sentenceStructure.append("hashtag")
 					if "hashtag" in partsOfSpeech:
@@ -91,6 +99,8 @@ def getSentenceTags(items):
 					else:
 						partsOfSpeech["hashtag"] = []
 						partsOfSpeech["hashtag"].append(word)
+					previous = word
+					previousPOS = "hashtag"
 				elif "amp" == word:
 					word = "&"
 					sentenceStructure.append("amp")
@@ -99,15 +109,38 @@ def getSentenceTags(items):
 					else:
 						partsOfSpeech["amp"] = []
 						partsOfSpeech["amp"].append(word)
+					previous = word
+					previousPOS = "amp"
 				else:
 					blob = TextBlob(word)
 					for word2, pos in blob.tags:
+						if previousPOS == "NN" and pos == "NN":
+							if previous in pairs:
+				        			pairs[previous].append(word2)
+					        	else:
+					        		pairs[previous] = []
+					        		pairs[previous].append(word2)
+					    	elif previousPOS == "NN" and pos == "NNS":
+							if previous in pairs2:
+				        			pairs2[previous].append(word2)
+					        	else:
+					        		pairs2[previous] = []
+					        		pairs2[previous].append(word2)
+					        elif previousPOS == "IN" and pos == "NN":
+							if previous in pairs3:
+				        			pairs3[previous].append(word2)
+					        	else:
+					        		pairs3[previous] = []
+					        		pairs3[previous].append(word2)
+
 						sentenceStructure.append(str(pos))
 				        if str(pos) in partsOfSpeech:
 				        	partsOfSpeech[str(pos)].append(word2)
 				        else:
 				        	partsOfSpeech[str(pos)] = []
 				        	partsOfSpeech[str(pos)].append(word2)
+				        previous = word2
+					previousPOS = str(pos)
 			if punctuation != "":
 				sentenceStructure.append("punctuation")
 				if "punctuation" in partsOfSpeech:
@@ -115,8 +148,11 @@ def getSentenceTags(items):
 				else:
 					partsOfSpeech["punctuation"] = []
 					partsOfSpeech["punctuation"].append(punctuation)
+		previous = ""
+		previousPOS = ""
 		Sentences.append(sentenceStructure)
-	return Sentences, partsOfSpeech
+	# print(pairs2)
+	return Sentences, partsOfSpeech, pairs, pairs2, pairs3
 
 test = getTweets('realDonaldTrump_tweets.xls')
 actualTweets = {}
@@ -129,20 +165,56 @@ for item in test:
 derp = getSentenceTags(test)
 
 sentenceCounter = Counter(str(e) for e in derp[0])
-wordCounter = Counter(str(e) for e in derp[1]['NNS'])
+# print(derp[0])
+# wordCounter = Counter(str(e) for e in derp[1]['NNS'])
 #print counter.most_common(5)
 #print wordCounter
 tweetDict = {}
-for i in range(0,3000):
+for i in range(0,10):
 	testTweet = random.choice(derp[0])
+	print(testTweet)
 	tweet = ""
+	previous = ""
+	previousPOS = ""
 	for part in testTweet:
-		wordCounter = Counter(str(e) for e in derp[1][part])
-		#print wordCounter
-		wordCounter = wordCounter.most_common(10)
-		test = random.choice(wordCounter)
-		tweet = tweet + " " + test[0]
-		tweetDict[i] = tweet
+		test = []
+		if part == "NN" and previousPOS == "NN" and previous != "":
+			wordCounter = Counter(str(e) for e in derp[2][previous])
+			wordCounter = wordCounter.most_common(10)
+			test = random.choice(wordCounter)
+			tweet = tweet + " " + test[0]
+			tweetDict[i] = tweet
+			print("NN")
+			print(previous)
+			print(test[0])
+		elif part == "NNS" and previousPOS == "NN" and previous != "":
+			wordCounter = Counter(str(e) for e in derp[3][previous])
+			wordCounter = wordCounter.most_common(10)
+			test = random.choice(wordCounter)
+			tweet = tweet + " " + test[0]
+			tweetDict[i] = tweet
+			print("NNS")
+			print(previous)
+			print(test[0])
+		elif part == "NN" and previousPOS == "IN" and previous != "":
+			wordCounter = Counter(str(e) for e in derp[4][previous])
+			wordCounter = wordCounter.most_common(10)
+			test = random.choice(wordCounter)
+			tweet = tweet + " " + test[0]
+			tweetDict[i] = tweet
+			print("IN")
+			print(previous)
+			print(test[0])
+		else:
+			wordCounter = Counter(str(e) for e in derp[1][part])
+			#print wordCounter
+			wordCounter = wordCounter.most_common(10)
+			test = random.choice(wordCounter)
+			tweet = tweet + " " + test[0]
+			tweetDict[i] = tweet
+
+		previous = test[0]
+		previousPOS = part
 	tweetDict[i] = tweet
 
 with open('data.txt', 'w') as outfile:
