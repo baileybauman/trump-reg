@@ -47,13 +47,16 @@ def getSentenceTags(items):
     Sentences = []
     partsOfSpeech = {}
     pairs = {} #NN NN
-    pairs2 = {} #NN NNs
+    pairs2 = {} #NN NNS
     pairs3 = {} #IN NN
     pairs4 = {} #VB DT
     pairs5 = {} #JJ NN
     pairs6 = {} # PRP NN
     pairs7 = {} # RB NN
     pairs8 = {} # DT NN
+    pairs9 = {} #IN NNS
+    pairs10 = {} #JJ NNS
+    pairs11 = {} # PRP NNS
     for item in items:
         temp = item.text.decode('ascii', errors="ignore")
         #temp = re.sub(r'\W+', ' ', temp)
@@ -167,6 +170,24 @@ def getSentenceTags(items):
                             else:
                                 pairs8[previous] = []
                                 pairs8[previous].append(word2)
+                        elif previousPOS == "IN" and pos == "NNS":
+                            if previous in pairs9:
+                                pairs9[previous].append(word2)
+                            else:
+                                pairs9[previous] = []
+                                pairs9[previous].append(word2)
+                        elif previousPOS == "JJ" and pos == "NNS":
+                            if previous in pairs10:
+                                pairs10[previous].append(word2)
+                            else:
+                                pairs10[previous] = []
+                                pairs10[previous].append(word2)
+                        elif previousPOS == "PRP" and pos == "NNS":
+                            if previous in pairs11:
+                                pairs11[previous].append(word2)
+                            else:
+                                pairs11[previous] = []
+                                pairs11[previous].append(word2)
 
                         sentenceStructure.append(str(pos))
                         if str(pos) in partsOfSpeech:
@@ -187,7 +208,7 @@ def getSentenceTags(items):
         previousPOS = ""
         Sentences.append(sentenceStructure)
     # print(Sentences)
-    return Sentences, partsOfSpeech, pairs, pairs2, pairs3, pairs4, pairs5, pairs6, pairs7, pairs8
+    return Sentences, partsOfSpeech, pairs, pairs2, pairs3, pairs4, pairs5, pairs6, pairs7, pairs8, pairs9, pairs10, pairs11
 
 test = getTweets('realDonaldTrump_tweets.xls')
 actualTweets = {}
@@ -270,6 +291,27 @@ for i in range(0,3000):
             # print("RB")
         elif part == "NN" and previousPOS == "DT" and previous != "" and previous in derp[9]:
             wordCounter = Counter(str(e) for e in derp[9][previous])
+            wordCounter = wordCounter.most_common(30)
+            test = random.choice(wordCounter)
+            tweet = tweet + " " + test[0]
+            tweetDict[i] = tweet
+            # print("DT NN")
+        elif part == "NNS" and previousPOS == "IN" and previous != "" and previous in derp[10]:
+            wordCounter = Counter(str(e) for e in derp[10][previous])
+            wordCounter = wordCounter.most_common(30)
+            test = random.choice(wordCounter)
+            tweet = tweet + " " + test[0]
+            tweetDict[i] = tweet
+            # print("DT NN")
+        elif part == "NNS" and previousPOS == "JJ" and previous != "" and previous in derp[11]:
+            wordCounter = Counter(str(e) for e in derp[11][previous])
+            wordCounter = wordCounter.most_common(30)
+            test = random.choice(wordCounter)
+            tweet = tweet + " " + test[0]
+            tweetDict[i] = tweet
+            # print("DT NN")
+        elif part == "NNS" and previousPOS == "PRP" and previous != "" and previous in derp[12]:
+            wordCounter = Counter(str(e) for e in derp[12][previous])
             wordCounter = wordCounter.most_common(30)
             test = random.choice(wordCounter)
             tweet = tweet + " " + test[0]
