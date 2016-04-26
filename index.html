@@ -3,12 +3,14 @@
 <html>    
     <head>
     <link rel="stylesheet" type="text/css" href="styles.css">
+    <!-- <a hr id="game_button">Play a Game</button> -->
+    <a href="game.html"><button id="game_button">Play a Game</button></a>
     </head>    
     <body>
         <div id="text_background">
 
             <div id="text_box">
-                This is a test This is a test This is a test This is a test This is a test This is a test This is a test
+                Make America Great Again
             </div>
         </div>
         <div id="generate_button_div">
@@ -24,6 +26,6 @@ function randomIntFromInterval(min,max)
 }
 $("#generate_button").click(function() {
   $.getJSON('data.txt', function(read_data) {
-      $('#text_box').html(read_data[randomIntFromInterval(0,199)]);  });
+      $('#text_box').html(read_data[randomIntFromInterval(0,2999)]);  });
 });
 </script>

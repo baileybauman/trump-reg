@@ -1,0 +1,74 @@
+<script type="text/javascript" src="http://code.jquery.com/jquery-1.7.1.min.js"></script>
+
+<html>    
+    <head>
+    <link rel="stylesheet" type="text/css" href="styles.css">
+    <a href="index.html"><button id="game_button">Home</button></a>
+    </head>    
+    <body>
+        <button id="game_text_background">
+
+            <div id="game_text_box">
+            </div>
+        </button>
+        <button id="text_background2">
+
+            <div id="text_box2">
+            </div>
+        </button>
+        <div id="result_div">
+            <div id="result">
+            </div>
+        </div>
+        <div id="generate_button_div">
+            <button type="button" id="play_button">Make America Great Again</button>
+        </div>
+    </body>
+
+</html>
+<script>
+function randomIntFromInterval(min,max)
+{
+    var s =Math.floor(Math.random()*(max-min+1)+min) 
+    return s;
+}
+$("#play_button").click(function() {
+    var s = randomIntFromInterval(0,1)
+    if (s == 1){
+        $.getJSON('data.txt', function(read_data) {
+            $('#game_text_box').html(read_data[randomIntFromInterval(0,2999)]);  });
+        $.getJSON('actualTweets.txt', function(read_data2) {
+            $('#text_box2').html(read_data2[randomIntFromInterval(0,3215)]);  });
+
+        document.getElementById("text_box2").className = "";
+        document.getElementById("text_box2").className += "trump";
+        document.getElementById("game_text_box").className = "";
+        document.getElementById('result').innerHTML ='';
+    }
+    else{
+        $.getJSON('actualTweets.txt', function(read_data) {
+            $('#game_text_box').html(read_data[randomIntFromInterval(0,3215)]);  });
+        $.getJSON('data.txt', function(read_data) {
+            $('#text_box2').html(read_data[randomIntFromInterval(0,2999)]);  });
+        document.getElementById("game_text_box").className = "";
+        document.getElementById("game_text_box").className += "trump";
+        document.getElementById("text_box2").className = "";
+        document.getElementById('result').innerHTML ='';
+    }
+    
+
+    
+});
+$("#game_text_background").click(function() {
+    if(document.getElementById("game_text_box").className == "trump")
+        document.getElementById('result').innerHTML ='Correct!';
+    else
+        document.getElementById('result').innerHTML ='Incorrect!';
+});
+$("#text_background2").click(function() {
+    if(document.getElementById("text_box2").className == "trump")
+        document.getElementById('result').innerHTML ='Correct!';
+    else
+        document.getElementById('result').innerHTML ='Incorrect!';
+});
+</script>
