@@ -2,8 +2,10 @@
 
 <html>    
     <head>
-    <link rel="stylesheet" type="text/css" href="styles.css">
-    <a href="index.html"><button id="game_button">Home</button></a>
+        <link rel="stylesheet" type="text/css" href="styles.css">
+        <a href="index.html"><button id="home_button" class="menu_button">Home</button></a>
+        <a href="pairs.html"><button id="pairs_button" class="menu_button">Pairs</button></a>
+        <a href="game.html"><button id="game_button" class="menu_button">Play a Game</button></a>
     </head>    
     <body>
         <button id="game_text_background">
@@ -16,16 +18,17 @@
             <div id="text_box2">
             </div>
         </button>
-        <div id="result_div">
+        <div class="text_background" id="result_div" >
             <div id="result">
             </div>
         </div>
-        <div id="generate_button_div">
-            <button type="button" id="play_button">Make America Great Again</button>
+        <div class="generate_button_div">
+            <button type="button" class="generate" id="play_button">Make America Great Again</button>
         </div>
     </body>
 
 </html>
+
 <script>
 function randomIntFromInterval(min,max)
 {

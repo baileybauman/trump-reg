@@ -11,12 +11,12 @@
     <body>
         <div class="text_background">
 
-            <div id="text_box" class="text">
+            <div id="pairs_text_box" class="text">
                 Make America Great Again
             </div>
         </div>
         <div class="generate_button_div">
-            <button type="button" id="generate_button">Make America Great Again</button>
+            <button type="button" id="pairs_generate_button">Make America Great Again</button>
         </div>
     </body>
 
@@ -26,8 +26,8 @@ function randomIntFromInterval(min,max)
 {
     return Math.floor(Math.random()*(max-min+1)+min);
 }
-$("#generate_button").click(function() {
-  $.getJSON('data.txt', function(read_data) {
-      $('#text_box').html(read_data[randomIntFromInterval(0,2999)]);  });
+$("#pairs_generate_button").click(function() {
+  $.getJSON('pair_data.txt', function(read_data) {
+      $('#pairs_text_box').html(read_data[randomIntFromInterval(0,29)]);  });
 });
 </script>
