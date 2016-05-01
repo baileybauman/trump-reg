@@ -55,7 +55,7 @@ def getSentenceTags(items):
 			if "http" not in word:
 				word = re.sub(r'[^a-zA-Z0-9 - @ # . !]', '', word)
 				word = re.sub(r'\s[0-9]+', '', word)
-				word = word.lower()
+				# word = word.lower()
 			else:
 			    word = re.sub(r'"', '', word)
 			punctuation = ""
@@ -100,6 +100,7 @@ def getSentenceTags(items):
 						partsOfSpeech["amp"] = []
 						partsOfSpeech["amp"].append(word)
 				else:
+					word = word.lower()
 					blob = TextBlob(word)
 					for word2, pos in blob.tags:
 						sentenceStructure.append(str(pos))
@@ -136,17 +137,21 @@ tweetDict = {}
 for i in range(0,3000):
 	testTweet = random.choice(derp[0])
 	tweet = ""
+	previousPOS = ""
 	for part in testTweet:
 		wordCounter = Counter(str(e) for e in derp[1][part])
 		#print wordCounter
 		wordCounter = wordCounter.most_common(10)
-		test = random.choice(wordCounter)
-		tweet = tweet + " " + test[0]
+		test = random.choice(wordCounter)[0]
+		if previousPOS == "punctuation" or previousPOS == "":
+			test = test.capitalize()
+		tweet = tweet + " " + test
 		tweetDict[i] = tweet
+		previousPOS = part
 	tweetDict[i] = tweet
 
 with open('data.txt', 'w') as outfile:
     json.dump(tweetDict, outfile)
 
-with open('actualTweets.txt', 'w') as outfile:
-    json.dump(actualTweets, outfile)
+# with open('actualTweets.txt', 'w') as outfile:
+#     json.dump(actualTweets, outfile)

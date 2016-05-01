@@ -65,7 +65,7 @@ def getSentenceTags(items):
             if "http" not in word:
                 word = re.sub(r'[^a-zA-Z0-9 - @ # . !]', '', word)
                 word = re.sub(r'\s[0-9]+', '', word)
-                word = word.lower()
+                # word = word.lower()
             else:
                 word = re.sub(r'"', '', word)
             punctuation = ""
@@ -117,6 +117,7 @@ def getSentenceTags(items):
                     previous = word
                     previousPOS = "amp"
                 else:
+                    word = word.lower()
                     blob = TextBlob(word)
                     for word2, pos in blob.tags:
                         if previousPOS == "NN" and pos == "NN":
@@ -213,79 +214,45 @@ for i in range(0,3000):
     previousPOS = ""
     for part in testTweet:
         test = []
+
         if part == "NN" and previousPOS == "NN" and previous != "" and previous in derp[2]:
             wordCounter = Counter(str(e) for e in derp[2][previous])
-            wordCounter = wordCounter.most_common(30)
-            test = random.choice(wordCounter)
-            tweet = tweet + " " + test[0]
-            tweetDict[i] = tweet
-            # print("NN")
-            # print(previous)
-            # print(test[0])
+
         elif part == "NNS" and previousPOS == "NN" and previous != "" and previous in derp[3]:
             wordCounter = Counter(str(e) for e in derp[3][previous])
-            wordCounter = wordCounter.most_common(30)
-            test = random.choice(wordCounter)
-            tweet = tweet + " " + test[0]
-            tweetDict[i] = tweet
-            # print("NNS")
-            # print(previous)
-            # print(test[0])
+
         elif part == "NN" and previousPOS == "IN" and previous != "" and previous in derp[4]:
             wordCounter = Counter(str(e) for e in derp[4][previous])
-            wordCounter = wordCounter.most_common(30)
-            test = random.choice(wordCounter)
-            tweet = tweet + " " + test[0]
-            tweetDict[i] = tweet
-            # print("IN")
-            # print(previous)
-            # print(test[0])
+
         elif part == "DT" and previousPOS == "VB" and previous != "" and previous in derp[5]:
             wordCounter = Counter(str(e) for e in derp[5][previous])
-            wordCounter = wordCounter.most_common(30)
-            test = random.choice(wordCounter)
-            tweet = tweet + " " + test[0]
-            tweetDict[i] = tweet
-            # print("VB")
+   
         elif part == "NN" and previousPOS == "JJ" and previous != "" and previous in derp[6]:
             wordCounter = Counter(str(e) for e in derp[6][previous])
-            wordCounter = wordCounter.most_common(30)
-            test = random.choice(wordCounter)
-            tweet = tweet + " " + test[0]
-            tweetDict[i] = tweet
-            # print("JJ")
+
         elif part == "NN" and previousPOS == "PRP" and previous != "" and previous in derp[7]:
             wordCounter = Counter(str(e) for e in derp[7][previous])
-            wordCounter = wordCounter.most_common(30)
-            test = random.choice(wordCounter)
-            tweet = tweet + " " + test[0]
-            tweetDict[i] = tweet
-            # print("PRP")
+
         elif part == "NN" and previousPOS == "RB" and previous != "" and previous in derp[8]:
             wordCounter = Counter(str(e) for e in derp[8][previous])
-            wordCounter = wordCounter.most_common(30)
-            test = random.choice(wordCounter)
-            tweet = tweet + " " + test[0]
-            tweetDict[i] = tweet
-            # print("RB")
+
         elif part == "NN" and previousPOS == "DT" and previous != "" and previous in derp[9]:
             wordCounter = Counter(str(e) for e in derp[9][previous])
-            wordCounter = wordCounter.most_common(30)
-            test = random.choice(wordCounter)
-            tweet = tweet + " " + test[0]
-            tweetDict[i] = tweet
-            # print("DT NN")
+
         else:
             wordCounter = Counter(str(e) for e in derp[1][part])
-            #print wordCounter
-            wordCounter = wordCounter.most_common(30)
-            test = random.choice(wordCounter)
-            tweet = tweet + " " + test[0]
-            tweetDict[i] = tweet
+       
+        wordCounter = wordCounter.most_common(random.randint(10,30))
+        test = random.choice(wordCounter)[0]
+        if previousPOS == "punctuation" or previousPOS == "":
+            test = test.capitalize()
+        tweet = tweet + " " + test
+        tweetDict[i] = tweet
+
+        
 
         previous = test[0]
         previousPOS = part
-    # print(tweet)
     tweetDict[i] = tweet
 
 with open('pair_data.txt', 'w') as outfile:
